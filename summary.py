@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from espncricinfo.match import Match
+from match import Match
+
 
 class Summary(object):
 
@@ -18,7 +19,8 @@ class Summary(object):
             return BeautifulSoup(r.text, 'xml')
 
     def _match_ids(self):
-        matches = [x.link.text.split(".html")[0].split('/')[6] for x in self.xml.findAll('item')]
+        matches = [x.link.text.split(".html")[0].split(
+            '/')[6] for x in self.xml.findAll('item')]
         return matches
 
     def _build_matches(self):
