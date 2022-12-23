@@ -8,6 +8,8 @@ class GetTeamLists():
 
     def run(self):
         for match in self.matches:
+            if not hasattr(match, 'team_1'):
+                continue
             print('Series: {}, {} vs. {}'.format(match.match_title,
                                                  match.team_1_abbreviation,
                                                  match.team_2_abbreviation))
@@ -24,5 +26,8 @@ class GetTeamLists():
 
 
 # Will fail for cases where a team isn't found at the moment
-teamLists1 = GetTeamLists(["India"])
+teamLists1 = GetTeamLists([])
 teamLists1.run()
+
+teamLists2 = GetTeamLists(["India"])
+teamLists2.run()
