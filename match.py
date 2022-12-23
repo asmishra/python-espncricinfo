@@ -12,6 +12,10 @@ class Match(object):
         self.json_url = "https://www.espncricinfo.com/matches/engine/match/{0}.json".format(
             str(match_id))
         self.json = self.get_json()
+        self.unusable_match_data = False
+        if not self.json.get('series'):
+            print('Unusable match data for {}'.format(self.json_url))
+            self.unusable_match_data = True
         self.html = self.get_html()
         self.comms_json = self.get_comms_json()
         if self.json:
@@ -70,7 +74,7 @@ class Match(object):
             self.team_2_run_rate = self._team_2_run_rate()
             self.team_2_overs_batted = self._team_2_overs_batted()
             self.team_2_batting_result = self._team_2_batting_result()
-            if not self.status == 'dormant':
+            if not self.status == 'dormant' and not self.unusable_match_data:
                 self.home_team = self._home_team()
                 self.batting_first = self._batting_first()
                 self.match_winner = self._match_winner()
@@ -159,7 +163,8 @@ class Match(object):
             return None
 
     def _series_id(self):
-        return self.json['series'][-1]['core_recreation_id']
+        if self.json.get('series'):
+            return self.json['series'][-1]['core_recreation_id']
 
     def _officials(self):
         return self.json['official']
