@@ -46,13 +46,12 @@ class Match(object):
             self.team_2_batting_result = self._team_2_batting_result()
 
     def get_json(self):
-        r = requests.get(self.json_url)
-        if r.status_code == 404:
-            pass
-        elif 'Scorecard not yet available' in r.text:
-            pass
-        else:
+        try:
+            r = requests.get(self.json_url)
+            r.raise_for_status()
             return r.json()
+        except requests.exceptions.HTTPError as err:
+            raise SystemExit(err)
 
     def match_json(self):
         return self.json['match']
