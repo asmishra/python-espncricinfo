@@ -2,20 +2,12 @@ from summary import Summary
 
 
 class GetTeamLists():
-
-    def setup(self):
-        self.summary = Summary()
+    def __init__(self, team_list=[]):
+        self.summary = Summary(team_list)
         self.matches = self.summary.matches
 
     def run(self):
-        self.setup()
-
-        # Match list
-        specificMatches = self.getSpecificMatches('IND', self.matches)
-        if specificMatches == []:
-            specificMatches = self.matches
-
-        for match in specificMatches:
+        for match in self.matches:
             print('Series: {}, {} vs. {}'.format(match.match_title,
                                                  match.team_1_abbreviation,
                                                  match.team_2_abbreviation))
@@ -24,13 +16,6 @@ class GetTeamLists():
             self.printPlayerList(match.team_2_abbreviation,
                                  match.team_2_players)
 
-    def getSpecificMatches(self, teamName, matchList):
-        specificMatchList = []
-        for match in matchList:
-            if match.team_1_abbreviation == teamName or match.team_2_abbreviation == teamName:
-                specificMatchList.append(match)
-        return specificMatchList
-
     def printPlayerList(self, team, playerList):
         print('{}:'.format(team))
         for player in playerList:
@@ -38,5 +23,6 @@ class GetTeamLists():
         print('')
 
 
-getTeamLists = GetTeamLists()
-getTeamLists.run()
+# Will fail for cases where a team isn't found at the moment
+teamLists1 = GetTeamLists(["India"])
+teamLists1.run()
