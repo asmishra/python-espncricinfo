@@ -21,4 +21,5 @@ async def teams(ctx, *args):
     response = GetTeamLists(args).run()
     await ctx.send(response)
 
-bot.run(os.getenv('DISCORD_TOKEN'))
+my_secret = os.environ['DISCORD_TOKEN']
+bot.run(my_secret)
