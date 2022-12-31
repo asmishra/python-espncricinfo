@@ -21,5 +21,11 @@ async def teams(ctx, *args):
     response = GetTeamLists(args).run()
     await ctx.send(response)
 
+
+@bot.command(name='whoisplaying', help='Lists the matches currently listed online')
+async def whoisplaying(ctx, *args):
+    response = GetTeamLists([]).getCurrentMatches()
+    await ctx.send(response)
+
 my_secret = os.environ['DISCORD_TOKEN']
 bot.run(my_secret)

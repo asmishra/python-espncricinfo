@@ -15,6 +15,14 @@ class GetTeamLists():
             result += self.printPlayerList(match)
         return 'uh-oh, maybe they\'re not playing? (or try full name)' if result == '' else result
 
+    def getCurrentMatches(self):
+        retStr = ''
+        for match in self.matches:
+            retStr += '**Series: {}, {} vs. {}**'.format(match.match_title,
+                                                         match.team_1['team_name'],
+                                                         match.team_2['team_name']) + '\n'
+        return retStr
+
     def printPlayerList(self, match):
         retStr = ''
         retStr += '**Series: {}, {} vs. {}**'.format(match.match_title,
