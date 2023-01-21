@@ -6,6 +6,9 @@ class GetTeamLists():
         self.summary = Summary(team_list)
         self.matches = self.summary.matches
 
+    def chunkstring(self, s, length):
+        return (s[0 + i: length + i] for i in range(0, len(s), length))
+
     def run(self):
         result = ''
         for match in self.matches:
@@ -21,7 +24,7 @@ class GetTeamLists():
             retStr += '**Series: {}, {} vs. {}**'.format(match.match_title,
                                                          match.team_1['team_name'],
                                                          match.team_2['team_name']) + '\n'
-        return retStr
+        return self.chunkstring(retStr, 4096)
 
     def printPlayerList(self, match):
         retStr = ''
